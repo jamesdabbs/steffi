@@ -1,15 +1,20 @@
 module Steffi
-  bind :atlas,  [:pointer, :int], :int
+  bind :atlas, [:pointer, :int], :int
+  bind :erdos_renyi_game, [:pointer, :int, :int, :double, :bool, :bool], :int
   bind :famous, [:pointer, :string], :int
-  bind :full,   [:pointer, :int, :bool, :bool], :int
-  bind :ring,   [:pointer, :int, :bool, :bool, :bool], :int
-  bind :star,   [:pointer, :int, :int, :int], :int
-  bind :tree,   [:pointer, :int, :int, :int], :int
+  bind :full, [:pointer, :int, :bool, :bool], :int
+  bind :ring, [:pointer, :int, :bool, :bool, :bool], :int
+  bind :star, [:pointer, :int, :int, :int], :int
+  bind :tree, [:pointer, :int, :int, :int], :int
 
   module Graph::Create
 
     def atlas i
       from :atlas, i
+    end
+
+    def erdos_renyi n, k
+      from :erdos_renyi_game, 1, n, k, false, false
     end
 
     def famous name
