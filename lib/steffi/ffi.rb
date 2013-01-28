@@ -15,6 +15,8 @@ module Steffi
   class Vector
     include Enumerable
 
+    attr_accessor :ptr
+
     def initialize ptr
       @ptr = ptr
     end
@@ -36,7 +38,7 @@ module Steffi
       def from_a ary
         ptr = FFI::MemoryPointer.new :pointer
         c_ary = FFI::MemoryPointer.new :double, ary.size
-        c_ary.put_array_of_double(0, ary)
+        c_ary.put_array_of_double(0, ary.map { |n| n.to_f })
         Steffi.igraph_vector_init_copy ptr, c_ary, ary.size
         new ptr
       end

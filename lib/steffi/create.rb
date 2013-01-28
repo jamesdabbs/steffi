@@ -1,5 +1,6 @@
 module Steffi
   bind :atlas, [:pointer, :int], :int
+  bind :cited_type_game, [:pointer, :int, :pointer, :pointer, :int, :bool], :int
   bind :erdos_renyi_game, [:pointer, :int, :int, :double, :bool, :bool], :int
   bind :forest_fire_game, [:pointer, :int, :double, :double, :int, :bool], :int
   bind :famous, [:pointer, :string], :int
@@ -14,6 +15,15 @@ module Steffi
       from :atlas, i
     end
 
+    def citations n, p
+      types = (0...n).to_a
+      types = Vector.from_a(types).ptr
+      attractivity = 1.0 / p
+      prefs = [attractivity] * (n+1)
+      prefs = Vector.from_a(prefs).ptr
+      from :cited_type_game, n, types, prefs, 1, false
+    end
+
     def erdos_renyi n, k
       from :erdos_renyi_game, 1, n, k, false, false
     end
@@ -23,7 +33,7 @@ module Steffi
     end
 
     def forest_fire n, k
-      from :forest_fire_game, n, 0.05, 0.025, k, false
+      from :forest_fire_game, n, 0.01/k, 1, 2, false
     end
 
     def full n
