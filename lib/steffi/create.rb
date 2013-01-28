@@ -1,6 +1,7 @@
 module Steffi
   bind :atlas, [:pointer, :int], :int
   bind :erdos_renyi_game, [:pointer, :int, :int, :double, :bool, :bool], :int
+  bind :forest_fire_game, [:pointer, :int, :double, :double, :int, :bool], :int
   bind :famous, [:pointer, :string], :int
   bind :full, [:pointer, :int, :bool, :bool], :int
   bind :ring, [:pointer, :int, :bool, :bool, :bool], :int
@@ -19,6 +20,10 @@ module Steffi
 
     def famous name
       from :famous, name
+    end
+
+    def forest_fire n, k
+      from :forest_fire_game, n, 0.05, 0.025, k, false
     end
 
     def full n
