@@ -1,4 +1,6 @@
 module Steffi
+  bind :read_graph_edgelist, [:pointer, :pointer, :int, :bool], :int
+
   bind :atlas, [:pointer, :int], :int
   bind :cited_type_game, [:pointer, :int, :pointer, :pointer, :int, :bool], :int
   bind :erdos_renyi_game, [:pointer, :int, :int, :double, :bool, :bool], :int
@@ -10,6 +12,13 @@ module Steffi
   bind :tree, [:pointer, :int, :int, :int], :int
 
   module Graph::Create
+
+    def load path
+      stream = C.fopen path, 'r'
+      g = from :read_graph_edgelist, stream, 0, false
+      C.fclose stream
+      g
+    end
 
     def atlas i
       from :atlas, i

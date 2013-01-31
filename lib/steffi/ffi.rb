@@ -1,5 +1,14 @@
 require 'ffi'
 
+module C
+  extend FFI::Library
+  ffi_lib 'c'
+
+  attach_function :fopen, [:pointer, :pointer], :pointer
+  attach_function :fprintf, [:pointer, :pointer, :varargs], :int
+  attach_function :fclose, [:pointer], :int
+end
+
 module Steffi
   extend FFI::Library
   ffi_lib 'igraph'
