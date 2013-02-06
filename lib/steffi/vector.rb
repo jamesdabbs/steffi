@@ -51,7 +51,7 @@ module Steffi
     end
 
     def to_s
-      map { |f| f }.to_s
+      to_a.to_s
     end
 
     def self.from_a ary
