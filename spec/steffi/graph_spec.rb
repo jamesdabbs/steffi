@@ -12,6 +12,6 @@ describe Steffi::Graph do
   end
 
   it 'errors gracefully' do
-    expect { Steffi::Graph.famous 'non-existent' }.to raise_error
+    expect { Steffi::Graph.famous 'non-existent' }.to raise_error(Steffi::Igraph::Error)
   end
 end
