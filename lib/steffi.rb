@@ -1,4 +1,5 @@
 require 'steffi/ffi'
+require 'steffi/error'
 
 require 'steffi/vector'
 

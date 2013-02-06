@@ -10,4 +10,8 @@ describe Steffi::Graph do
   it 'can find communities' do
     subject.community.should have(70).items
   end
+
+  it 'errors gracefully' do
+    expect { Steffi::Graph.famous 'non-existent' }.to raise_error
+  end
 end
