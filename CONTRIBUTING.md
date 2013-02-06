@@ -4,6 +4,7 @@ Contributions of any kind are welcome and encouraged, be they:
 - Bug reports
 - Feature requests
 - Words of encouragement
+- :beer:
 
 If you are interested in a particular feature, feel free to open an issue or 
 send me an email.
