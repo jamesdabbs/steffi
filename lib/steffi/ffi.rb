@@ -12,7 +12,7 @@ module Steffi
 
   module Igraph
     extend FFI::Library
-    ffi_lib :igraph
+    ffi_lib File.expand_path('../../../ext/libigraph.0.6.dylib', __FILE__)
 
     def self.bind name, in_t, out_t
       attach_function :"igraph_#{name}", in_t, out_t
