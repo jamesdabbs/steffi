@@ -54,6 +54,12 @@ module Steffi
       map { |f| f }.to_s
     end
 
+    def self.from_a ary
+      v = new
+      ary.each { |i| v << i }
+      v
+    end
+
   end
 
 end

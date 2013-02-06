@@ -42,7 +42,7 @@ module Steffi
       end
 
       def famous name
-        from :famous, name
+        from :famous, name.to_s
       end
 
       def forest_fire n, k

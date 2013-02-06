@@ -8,7 +8,7 @@ module Steffi
     class Error < StandardError; end
 
     ErrorHandler = Proc.new do |reason, file, line, code|
-      raise Error.new "#{strerror code}: #{reason} (#{file}:#{line}"
+      raise Error.new "#{strerror code}: #{reason} (#{file}:#{line})"
     end
 
     set_error_handler ErrorHandler

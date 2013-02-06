@@ -8,7 +8,7 @@ describe Steffi::Graph do
   its(:ecount)   { should == 140 }
 
   it 'can find communities' do
-    subject.community.should have(70).items
+    subject.communities.should have(70).items
   end
 
   it 'errors gracefully' do

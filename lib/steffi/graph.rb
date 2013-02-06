@@ -36,5 +36,12 @@ module Steffi
       C.fclose stream
     end
 
+    def d3
+      {
+        nodes: communities.each_with_index.map { |c,i| { name: i, group: c.to_i } },
+        links: edges.map { |e| { source: e.from, target: e.to, weight: 1 } }
+      }
+    end
+
   end
 end

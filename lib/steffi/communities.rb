@@ -5,7 +5,7 @@ module Steffi
   end
 
   class Graph
-    def community
+    def communities
       membership = Vector.new
       Igraph.community_multilevel ptr, nil, membership.ptr, nil, nil
       membership

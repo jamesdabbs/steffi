@@ -9,7 +9,7 @@ require 'steffi/edge'
 
 require 'steffi/create'
 require 'steffi/metrics'
-require 'steffi/community'
+require 'steffi/communities'
 
 module Steffi
 end
