@@ -1,16 +1,37 @@
 module Steffi
 
-  bind :write_graph_edgelist, [:pointer, :pointer], :int
+  module Igraph
+    bind :write_graph_edgelist, [:pointer, :pointer], :int
+  end
 
   class Graph
-    def initialize graph_ptr
-      @graph_ptr = graph_ptr
-    end 
+
+    class Struct < FFI::Struct
+      layout :n,        :int,
+             :directed, :bool,
+             :from,     Vector::Struct,
+             :to,       Vector::Struct,
+             :oi,       Vector::Struct,
+             :ii,       Vector::Struct,
+             :os,       Vector::Struct,
+             :is,       Vector::Struct,
+             :attr,     :pointer
+    end
+
+    def initialize 
+      @struct = Struct.new
+      yield ptr if block_given?
+    end
+
+    def ptr
+      @struct.to_ptr
+    end
 
     def dump path
       stream = C.fopen path, 'w'
-      Steffi.igraph_write_graph_edgelist @graph_ptr, stream
+      Igraph.write_graph_edgelist ptr, stream
       C.fclose stream
     end
+
   end
 end

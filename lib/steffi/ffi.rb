@@ -1,57 +1,29 @@
 require 'ffi'
 
-module C
-  extend FFI::Library
-  ffi_lib 'c'
-
-  attach_function :fopen, [:pointer, :pointer], :pointer
-  attach_function :fprintf, [:pointer, :pointer, :varargs], :int
-  attach_function :fclose, [:pointer], :int
-end
-
 module Steffi
-  extend FFI::Library
-  ffi_lib 'igraph'
 
-  def self.bind name, in_t, out_t
-    attach_function "igraph_#{name}", in_t, out_t
+  module C
+    extend FFI::Library
+    ffi_lib :c
+
+    attach_function :malloc, [:size_t], :pointer
+
+    attach_function :fopen, [:pointer, :pointer], :pointer
+    attach_function :fprintf, [:pointer, :pointer, :varargs], :int
+    attach_function :fclose, [:pointer], :int
   end
 
-  bind :vector_init_copy, [:pointer, :pointer, :long], :int
-  bind :vector_e, [:pointer, :long], :double
-  bind :vector_size, [:pointer], :long
+  module Igraph
+    extend FFI::Library
+    ffi_lib :igraph
 
-  class Vector
-    include Enumerable
-
-    attr_accessor :ptr
-
-    def initialize ptr
-      @ptr = ptr
+    def self.bind name, in_t, out_t
+      attach_function :"igraph_#{name}", in_t, out_t
     end
 
-    def size
-      Steffi.igraph_vector_size @ptr
-    end
-
-    def [] i
-      Steffi.igraph_vector_e @ptr, i
-    end
-
-    def each
-      0.upto(size-1) { |i| yield self[i] }
-    end
-
-    class << self
-
-      def from_a ary
-        ptr = FFI::MemoryPointer.new :pointer
-        c_ary = FFI::MemoryPointer.new :double, ary.size
-        c_ary.put_array_of_double(0, ary.map { |n| n.to_f })
-        Steffi.igraph_vector_init_copy ptr, c_ary, ary.size
-        new ptr
-      end
-
+    def self.method_missing name, *args, &block
+      iname = :"igraph_#{name}"
+      respond_to?(iname) ? send(iname, *args, &block) : super
     end
   end
 end
