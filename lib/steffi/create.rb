@@ -68,8 +68,8 @@ module Steffi
       private #-------------------------------------------------------
 
       def from name, *args
-        Graph.new do |ptr|
-          Igraph.send name, ptr, *args
+        Graph.new do |g|
+          Igraph.send name, g.ptr, *args
         end
       end
 

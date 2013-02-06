@@ -2,11 +2,12 @@ module Steffi
 
   module Igraph
     bind :write_graph_edgelist, [:pointer, :pointer], :int
+    bind :destroy, [:pointer], :int
   end
 
   class Graph
 
-    class Struct < FFI::Struct
+    class Struct < FFI::ManagedStruct
       layout :n,        :int,
              :directed, :bool,
              :from,     Vector::Struct,
@@ -16,15 +17,17 @@ module Steffi
              :os,       Vector::Struct,
              :is,       Vector::Struct,
              :attr,     :pointer
+
+      def self.release ptr
+        Igraph.destroy ptr
+      end
     end
+
+    attr_reader :ptr
 
     def initialize 
-      @struct = Struct.new
-      yield ptr if block_given?
-    end
-
-    def ptr
-      @struct.to_ptr
+      @ptr = FFI::MemoryPointer.new Struct
+      yield self if block_given?
     end
 
     def dump path
