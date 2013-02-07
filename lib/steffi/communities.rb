@@ -6,9 +6,11 @@ module Steffi
 
   class Graph
     def communities
+      return @communities unless @communities.nil?
+
       membership = Vector.new
       Igraph.community_multilevel ptr, nil, membership.ptr, nil, nil
-      membership
+      @communities = membership
     end
   end
 end

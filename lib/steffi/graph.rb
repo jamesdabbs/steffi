@@ -25,22 +25,41 @@ module Steffi
 
     attr_reader :ptr
 
-    def initialize 
+    def initialize opts={}
       @ptr = FFI::MemoryPointer.new Struct
-      yield self if block_given?
+      @directed = !!opts[:directed]
+    end
+
+    def directed?
+      @directed
     end
 
     def dump path
-      stream = C.fopen path, 'w'
-      Igraph.write_graph_edgelist ptr, stream
-      C.fclose stream
+      C.open(path, 'w') do |stream|
+        Igraph.write_graph_edgelist ptr, stream
+      end
     end
 
-    def d3
+    def to_hash opts={}
+      color = opts[:color] || Proc.new { |n| communities[n] }
       {
-        nodes: communities.each_with_index.map { |c,i| { name: i, group: c.to_i } },
+        directed: directed?,
+        nodes: vertices.map { |v| { name: v, group: color.call(v) } },
         links: edges.map { |e| { source: e.from, target: e.to, weight: 1 } }
       }
+    end
+
+    private #-------------------------------------------------------
+
+    def self.constructor name, &block
+      define_method name, &block
+
+      Graph.define_singleton_method name do |*args|
+        opts = args.last.is_a?(Hash) ? args.pop : {}
+        g = Graph.new opts
+        g.send name, *args
+        g
+      end
     end
 
   end

@@ -8,11 +8,18 @@ module Steffi
 
     attach_function :fopen, [:pointer, :pointer], :pointer
     attach_function :fclose, [:pointer], :int
+
+    def self.open path, mode='r'
+      stream = C.fopen path, mode
+      result = yield stream if block_given?
+      C.fclose stream
+      result
+    end
   end
 
   module Igraph
     extend FFI::Library
-    ffi_lib File.expand_path('../../../ext/libigraph.0.6.dylib', __FILE__)
+    ffi_lib :igraph
 
     def self.bind name, in_t, out_t
       attach_function :"igraph_#{name}", in_t, out_t

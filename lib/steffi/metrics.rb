@@ -1,6 +1,6 @@
 module Steffi
   module Igraph
-    bind :diameter, [:pointer, :pointer, :pointer, :pointer, :pointer, :int, :int], :int
+    bind :diameter, [:pointer, :pointer, :pointer, :pointer, :pointer, :bool, :int], :int
     bind :ecount,   [:pointer], :int
     bind :vcount,   [:pointer], :int
 
@@ -10,7 +10,7 @@ module Steffi
   class Graph
     def diameter
       d = FFI::MemoryPointer.new :int
-      Igraph.diameter ptr, d, nil, nil, nil, 0, 1
+      Igraph.diameter ptr, d, nil, nil, nil, @directed, 1
       d.get_int 0
     end
 
@@ -35,6 +35,10 @@ module Steffi
 
     def edges
       0.upto(ecount - 1).map { |i| edge i }
+    end
+
+    def vertices
+      0.upto(vcount - 1).to_a
     end
 
   end
