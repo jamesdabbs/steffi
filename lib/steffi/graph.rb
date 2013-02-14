@@ -2,6 +2,7 @@ module Steffi
 
   module Igraph
     bind :write_graph_edgelist, [:pointer, :pointer], :int
+    bind :write_graph_gml, [:pointer, :pointer, :pointer, :pointer], :int
     bind :destroy, [:pointer], :int
   end
 
@@ -34,9 +35,21 @@ module Steffi
       @directed
     end
 
-    def dump path
+    def file_format filename
+      ext = filename.split('.').last
+    end
+
+    def dump path, format=nil
+      format ||= file_format path
       C.open(path, 'w') do |stream|
-        Igraph.write_graph_edgelist ptr, stream
+        case format.to_sym
+        when :edgelist
+          Igraph.write_graph_edgelist ptr, stream
+        when :gml
+          Igraph.write_graph_gml ptr, stream, nil, nil
+        else
+          raise "Unrecognized file format: #{format}"
+        end
       end
     end
 
