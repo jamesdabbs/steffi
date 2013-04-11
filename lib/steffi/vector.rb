@@ -20,9 +20,10 @@ module Steffi
     end
 
     def self.from_a ary
-      v = new  { |v| Igraph.vector_init v.pointer, 0 }
-      ary.each { |i| v << i }
-      v
+      new do |v| 
+        Igraph.vector_init v.pointer, 0
+        ary.each { |i| v << i }
+      end
     end
 
     include Enumerable

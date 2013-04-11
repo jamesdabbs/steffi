@@ -2,6 +2,8 @@ module Steffi
   class EdgeSet
     include Enumerable
 
+    ERROR = false # FIXME: add error handling
+
     def initialize graph
       @graph = graph
     end
@@ -37,17 +39,15 @@ module Steffi
     end
 
     def find_pairs *pairs
-      edges = Vector.null
-      error = false
-      Igraph.get_eids @graph.pointer, edges.pointer, Vector.from_a(pairs.flatten).pointer, nil, @graph.directed?, error
-      edges.map &:to_i
+      Vector.null.tap do |edges|
+        Igraph.get_eids @graph.pointer, edges.pointer, Vector.from_a(pairs.flatten).pointer, nil, @graph.directed?, ERROR
+      end.map &:to_i
     end
 
     def find_path *vertices
-      edges = Vector.null
-      error = false
-      Igraph.get_eids @graph.pointer, edges.pointer, nil, Vector.from_a(*vertices).pointer, @graph.directed?, error
-      edges.map &:to_i
+      Vector.null.tap do |edges|
+        Igraph.get_eids @graph.pointer, edges.pointer, nil, Vector.from_a(*vertices).pointer, @graph.directed?, ERROR
+      end.map &:to_i
     end
   end
 end
