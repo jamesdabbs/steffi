@@ -3,10 +3,6 @@ require 'helper'
 describe Steffi::Graph do
   # subject { Steffi::Graph.famous 'meredith' }
 
-  # its(:diameter) { should == 8   }
-  # its(:vcount)   { should == 70  }
-  # its(:ecount)   { should == 140 }
-
   # it 'can find communities' do
   #   subject.communities.should have(70).items
   # end
@@ -19,7 +15,7 @@ describe Steffi::Graph do
 
   it 'can create empty graphs' do
     g = Steffi::Graph.empty 5
-    g.vertices.should have(5).members
+    g.should have(5).vertices
     g.edges.should be_empty
   end
 
@@ -35,7 +31,7 @@ describe Steffi::Graph do
   it 'can copy a graph' do
     g = Steffi::Graph.empty 7
     c = Steffi::Graph.copy g
-    c.vertices.should have(7).members
+    c.should have(7).vertices
   end
 
   it 'can destroy a graph' do
@@ -46,7 +42,7 @@ describe Steffi::Graph do
   it 'can create edges' do
     g = Steffi::Graph.empty 2
     g.edges << [0, 1]
-    g.edges.should have(1).member
+    g.should have(1).edges
   end
 
   it 'can look up edges by id' do

@@ -82,18 +82,5 @@ module Steffi
     #   }
     # end
 
-    private #-------------------------------------------------------
-
-    def self.constructor name, &block
-      define_method name, &block
-
-      Graph.define_singleton_method name do |*args|
-        opts = args.last.is_a?(Hash) ? args.pop : {}
-        g = Graph.new opts
-        g.send name, *args
-        g
-      end
-    end
-
   end
 end
