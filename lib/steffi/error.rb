@@ -3,7 +3,7 @@ module Steffi
     callback :error_handler, [:string, :string, :int, :int], :void
 
     bind :set_error_handler, [:error_handler], :error_handler
-    bind :strerror, [:int], :string
+    bind :strerror,          [:int], :string
 
     class Error < StandardError; end
 
@@ -11,6 +11,6 @@ module Steffi
       raise Error.new "#{strerror code}: #{reason} (#{file}:#{line})"
     end
 
-    # set_error_handler ErrorHandler
+    set_error_handler ErrorHandler
   end
 end
