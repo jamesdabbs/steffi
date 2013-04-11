@@ -21,7 +21,7 @@ module Steffi
 
     def self.from_a ary
       v = new  { |v| Igraph.vector_init v.pointer, 0 }
-      ary.each { |i| v << i}
+      ary.each { |i| v << i }
       v
     end
 

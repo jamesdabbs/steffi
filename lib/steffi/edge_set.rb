@@ -36,18 +36,18 @@ module Steffi
       Igraph.get_eid @graph.pointer, id, pair.first, pair.last, @graph.directed?, error
     end
 
-    # def find_pairs *pairs
-    #   edges = Vector.new
-    #   error = false
-    #   Igraph.get_eids @graph.pointer, edges.pointer, Vector.from_a(pairs), nil, @graph.directed?, error
-    #   edges
-    # end
+    def find_pairs *pairs
+      edges = Vector.null
+      error = false
+      Igraph.get_eids @graph.pointer, edges.pointer, Vector.from_a(pairs.flatten).pointer, nil, @graph.directed?, error
+      edges.map &:to_i
+    end
 
-    # def find_path *vertices
-    #   edges = Vector.new
-    #   error = false
-    #   Igraph.get_eids @graph.pointer, edges.pointer, nil, Vector.from_a(pairs), nil, @graph.directed?, error
-    #   edges
-    # end
+    def find_path *vertices
+      edges = Vector.null
+      error = false
+      Igraph.get_eids @graph.pointer, edges.pointer, nil, Vector.from_a(*vertices).pointer, @graph.directed?, error
+      edges.map &:to_i
+    end
   end
 end

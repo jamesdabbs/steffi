@@ -41,12 +41,10 @@ module Steffi
     bind :destroy,     [:pointer]
 
     # 4.2.2 Basic query operations
-    bind :vcount,  [:pointer], :int
-    bind :ecount,  [:pointer], :int
-    bind :edge,    [:pointer, :int, :pointer, :pointer]
-    bind :get_eid, [:pointer, :pointer, :int, :int, :bool, :bool]
-
-    # graph, &[edge #], &[pairs], &[path], directed?, error?
+    bind :vcount,   [:pointer], :int
+    bind :ecount,   [:pointer], :int
+    bind :edge,     [:pointer, :int, :pointer, :pointer]
+    bind :get_eid,  [:pointer, :pointer, :int, :int, :bool, :bool]
     bind :get_eids, [:pointer, :pointer, :pointer, :pointer, :bool, :bool]
 
     # graph, &[edge #]. &[pairs], &[path], directed?, error?

@@ -62,15 +62,15 @@ describe Steffi::Graph do
   pending 'can lookup directed edges'
   pending 'can handle errors when looking up edges (eid, eids, eids_multi)'
 
-  # it 'can look up a list of edges by vertex' do
-  #   g = Steffi::Graph.full 3
-  #   g.edges.find_pairs([0,1], [1,2]).should == [0, 1]
-  # end
+  it 'can look up a list of edges by vertex' do
+    g = Steffi::Graph.full 3
+    g.edges.find_pairs([0,1], [1,2]).should == [0, 2]
+  end
 
-  # it 'can look up a list of edges in a path' do
-  #   g = Steffi::Graph.full 3
-  #   g.edges.find_path([0,1,2]).should == [0, 1]
-  # end
+  it 'can look up a list of edges in a path' do
+    g = Steffi::Graph.full 3
+    g.edges.find_path([0,1,2]).should == [0, 2]
+  end
 
   it 'can look up neighbors' do
     g = Steffi::Graph.full 5
