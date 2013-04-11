@@ -11,6 +11,17 @@ describe Steffi::Graph do
   #   expect { Steffi::Graph.famous 'non-existent' }.to raise_error(Steffi::Igraph::Error)
   # end
 
+  # -- File handling -----
+
+  # [:gml, :edgelist].each do |fmt|
+  #   it "can dump and load .#{fmt}" do
+  #     Steffi::Graph.star(8).dump f, fmt
+
+  #     h = Steffi::Graph.load f, fmt
+  #     h.should have(7).edges
+  #   end
+  # end
+
   # -- 4.1-3 -----
 
   it 'can create empty graphs' do

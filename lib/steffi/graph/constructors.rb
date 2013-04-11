@@ -22,20 +22,6 @@ module Steffi
 
     class << self
 
-      # constructor :load  do |path, format=nil|
-      #   format ||= file_format path
-      #   C.open(path, 'r') do |stream|
-      #     case format.to_sym
-      #     when :edgelist
-      #       Igraph.read_graph_edgelist ptr, stream, 0, directed?
-      #     when :gml
-      #       Igraph.read_graph_gml ptr, stream
-      #     else
-      #       raise "Unrecognized file format: #{format}"
-      #     end
-      #   end
-      # end
-
       def atlas i
         new { |graph| Igraph.atlas graph.pointer, i }
       end

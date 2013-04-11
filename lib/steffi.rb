@@ -9,7 +9,6 @@
   edge
   edge_set
 
-  constructors
   metrics
   communities
 }.each { |mod| require "steffi/#{mod}" }

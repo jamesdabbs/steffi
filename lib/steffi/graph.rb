@@ -1,9 +1,7 @@
-module Steffi
+require 'steffi/graph/constructors'
+require 'steffi/graph/file'
 
-  module Igraph
-    bind :write_graph_edgelist, [:pointer, :pointer], :int
-    bind :write_graph_gml, [:pointer, :pointer, :pointer, :pointer], :int
-  end
+module Steffi
 
   class Graph
     attr_reader :pointer
@@ -54,33 +52,6 @@ module Steffi
       @pointer = FFI::MemoryPointer.new Struct
       yield self if block_given?
     end
-
-    # def file_format filename
-    #   ext = filename.split('.').last
-    # end
-
-    # def dump path, format=nil
-    #   format ||= file_format path
-    #   C.open(path, 'w') do |stream|
-    #     case format.to_sym
-    #     when :edgelist
-    #       Igraph.write_graph_edgelist ptr, stream
-    #     when :gml
-    #       Igraph.write_graph_gml ptr, stream, nil, nil
-    #     else
-    #       raise "Unrecognized file format: #{format}"
-    #     end
-    #   end
-    # end
-
-    # def to_hash opts={}
-    #   color = opts[:color] || Proc.new { |n| communities[n] }
-    #   {
-    #     directed: directed?,
-    #     nodes: vertices.map { |v| { name: v, group: color.call(v) } },
-    #     links: edges.map { |e| { source: e.from, target: e.to, weight: 1 } }
-    #   }
-    # end
 
   end
 end
