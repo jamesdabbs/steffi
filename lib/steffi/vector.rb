@@ -27,7 +27,7 @@ module Steffi
     end
 
     def self.from_slice slice
-      # FIXME: this only works for inclusive slices
+      raise "Slices should be inclusive" if slice.exclude_end?
       new { |v| Igraph.vector_init_seq v.pointer, slice.first, slice.last }
     end
 

@@ -9,6 +9,10 @@ describe Steffi::Vector do
     Steffi::Vector.from_slice(5..9).should have(5).members
   end
 
+  it 'errors on exclusive slices' do
+    expect { Steffi::Vector.from_slice(5...9) }.to raise_error
+  end
+
   # -----
 
   subject { Steffi::Vector.from_a [2, 3, 4] }
