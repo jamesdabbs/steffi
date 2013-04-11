@@ -39,3 +39,4 @@ end
 require_relative 'ffi/basic'
 require_relative 'ffi/vector'
 require_relative 'ffi/constructors'
+require_relative 'ffi/cliques'
