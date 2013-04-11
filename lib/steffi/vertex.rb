@@ -4,18 +4,16 @@ module Steffi
       @graph, @id = graph, id
     end
 
-    def neighbors
-      mode = 3 # IGRAPH_ALL / FIXME: define and use enum
-      v = Vector.null
-      Igraph.neighbors @graph.pointer, v.pointer, @id, mode
-      v.to_a
+    def neighbors mode=:all
+      Vector.null.tap do |v|
+        Igraph.neighbors @graph.pointer, v.pointer, @id, mode
+      end.to_a
     end
 
-    def incident
-      mode = 3 # IGRAPH_ALL / FIXME: define and use enum
-      v = Vector.null
-      Igraph.incident @graph.pointer, v.pointer, @id, mode
-      v.map &:to_i
+    def incident mode=:all
+      Vector.null.tap do |v|
+        Igraph.incident @graph.pointer, v.pointer, @id, mode
+      end.map &:to_i
     end
   end
 end

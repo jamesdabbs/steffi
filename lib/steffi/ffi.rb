@@ -33,6 +33,8 @@ module Steffi
         send :"igraph_#{name}", *args, &block
       end
     end
+    
+    enum :neimode, [:out, 1, :in, 2, :all, 3, :total, 3]
 
     # 4.2.1 Graph constructors and deconstructors
     bind :empty,       [:pointer, :int, :bool]
@@ -50,8 +52,8 @@ module Steffi
     # graph, &[edge #]. &[pairs], &[path], directed?, error?
     bind :get_eids_multi, [:pointer, :pointer, :pointer, :pointer, :bool, :bool]
 
-    bind :neighbors,   [:pointer, :pointer, :int, :int]
-    bind :incident,    [:pointer, :pointer, :int, :int] 
+    bind :neighbors,   [:pointer, :pointer, :int, :neimode]
+    bind :incident,    [:pointer, :pointer, :int, :neimode] 
     bind :is_directed, [:pointer], :bool
 
     # graph, &[results], vids, mode, loops?
