@@ -12,8 +12,20 @@ describe 'Graph constructors' do
     graph.vertices.size.should == 1
   end
 
+  constructor :citations, 55 do |graph|
+    graph.vertices.size.should == 55
+  end
+
+  constructor :erdos_renyi, 100, 123 do |graph|
+    graph.edges.size.should == 123
+  end
+
   constructor :famous, 'meredith' do |graph|
     graph.vertices.size.should == 70
+  end
+
+  constructor :forest_fire, 111, 0.01, 3, 20 do |graph|
+    graph.vertices.size.should == 111
   end
 
   constructor :full, 4 do |graph|
