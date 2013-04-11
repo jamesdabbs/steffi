@@ -34,8 +34,9 @@ module Steffi
     end
 
     def find pair, error=false
-      id = FFI::MemoryPointer.new :int
-      Igraph.get_eid @graph.pointer, id, pair.first, pair.last, @graph.directed?, error
+      FFI::MemoryPointer.new(:int).tap do |id|
+        Igraph.get_eid @graph.pointer, id, pair.first, pair.last, @graph.directed?, error
+      end.get_int 0
     end
 
     def find_pairs *pairs
