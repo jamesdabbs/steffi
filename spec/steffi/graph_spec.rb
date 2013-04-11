@@ -47,7 +47,7 @@ describe Steffi::Graph do
 
   it 'can look up edges by id' do
     g = Steffi::Graph.full 5
-    g.edges.first.should == [0, 1]
+    g.edges.first.to_pair.should == [0, 1]
   end
 
   it 'can look up edges by vertex' do

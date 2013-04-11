@@ -78,15 +78,5 @@ module Steffi
     def product
       Igraph.vector_prod @pointer
     end
-
-    # def to_s
-    #   to_a.to_s
-    # end
-
-    # def self.from_a ary
-    #   v = new
-    #   ary.each { |i| v << i }
-    #   v
-    # end
   end
 end

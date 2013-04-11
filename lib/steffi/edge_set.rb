@@ -24,7 +24,7 @@ module Steffi
       from = FFI::MemoryPointer.new :int
       to   = FFI::MemoryPointer.new :int
       Igraph.edge @graph.pointer, n, from, to
-      [from.get_int(0), to.get_int(0)]
+      Edge.new @graph, from.get_int(0), to.get_int(0)
     end
 
     def each

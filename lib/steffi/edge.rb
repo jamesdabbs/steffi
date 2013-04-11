@@ -1,15 +1,13 @@
 module Steffi
   class Edge
-    attr_accessor :graph, :from, :to
+    attr_reader :graph, :from, :to
 
-    def initialize graph,from,to
-      @graph = graph
-      @from = from
-      @to = to
+    def initialize graph, from, to
+      @graph, @from, @to = graph, from, to
     end
 
-    def to_s
-      "(#{from},#{to})"
+    def to_pair
+      [@from, @to]
     end
   end
 end

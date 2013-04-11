@@ -1,5 +1,7 @@
 module Steffi
   class Vertex
+    attr_reader :graph, :id
+    
     def initialize graph, id
       @graph, @id = graph, id
     end
