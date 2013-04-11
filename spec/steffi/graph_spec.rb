@@ -15,6 +15,8 @@ describe Steffi::Graph do
   #   expect { Steffi::Graph.famous 'non-existent' }.to raise_error(Steffi::Igraph::Error)
   # end
 
+  # -- 2 -----
+
   it 'can create empty graphs' do
     g = Steffi::Graph.empty 5
     g.vertices.should have(5).members
@@ -23,6 +25,11 @@ describe Steffi::Graph do
 
   it 'can create a graph with attributes' do
     pending
+  end
+
+  it 'can create a directed graph' do
+    g = Steffi::Graph.empty 5, true
+    g.should be_directed
   end
 
   it 'can copy a graph' do
@@ -42,8 +49,16 @@ describe Steffi::Graph do
     g.edges.should have(1).member
   end
 
-  it 'can look up edges' do
+  it 'can look up edges by id' do
     g = Steffi::Graph.full 5
     g.edges.first.should == [0, 1]
   end
+
+  it 'can look up edges by vertex' do
+    g = Steffi::Graph.full 5
+    g.edges.find([0, 1]).should == 0
+  end
+
+  pending 'can lookup directed edges'
+  pending 'can handle errors when looking up edges'
 end

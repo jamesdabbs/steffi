@@ -41,11 +41,9 @@ module Steffi
     bind :destroy,     [:pointer]
 
     # 2.2 Basic query operations
-    bind :vcount, [:pointer], :int
-    bind :ecount, [:pointer], :int
-    bind :edge,   [:pointer, :int, :pointer, :pointer] # graph, edge #, &from, &to
-
-    # graph, &edge #, from, to, directed?, error?
+    bind :vcount,  [:pointer], :int
+    bind :ecount,  [:pointer], :int
+    bind :edge,    [:pointer, :int, :pointer, :pointer]
     bind :get_eid, [:pointer, :pointer, :int, :int, :bool, :bool]
 
     # graph, &[edge #], &[pairs], &[path], directed?, error?
@@ -56,7 +54,7 @@ module Steffi
 
     bind :neighbors,   [:pointer, :pointer, :int, :int] # graph, &[result], node, mode
     bind :incident,    [:pointer, :pointer, :int, :int] # graph, &[result], node, mode
-    bind :is_directed, [:pointer], :bool                # graph => directed?
+    bind :is_directed, [:pointer], :bool
 
     # graph, &[results], vids, mode, loops?
     bind :degree, [:pointer, :pointer, :int, :bool]

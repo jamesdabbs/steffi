@@ -36,6 +36,10 @@ module Steffi
       Igraph.destroy pointer
     end
 
+    def directed?
+      Igraph.is_directed pointer
+    end
+
     def vertices
       VertexSet.new self
     end

@@ -30,5 +30,10 @@ module Steffi
         yield self[i]
       end
     end
+
+    def find pair, error=false
+      id = FFI::MemoryPointer.new :int
+      Igraph.get_eid @graph.pointer, id, pair.first, pair.last, @graph.directed?, error
+    end
   end
 end
