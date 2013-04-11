@@ -26,6 +26,11 @@ module Steffi
       end
     end
 
+    def self.from_slice slice
+      # FIXME: this only works for inclusive slices
+      new { |v| Igraph.vector_init_seq v.pointer, slice.first, slice.last }
+    end
+
     include Enumerable
 
     attr_reader :pointer
@@ -48,14 +53,30 @@ module Steffi
       Igraph.vector_e @pointer, i
     end
 
-    # def []= i, obj
-    #   Igraph.vector_set ptr, i, obj.to_f
-    # end
+    def []= i, obj
+      Igraph.vector_set @pointer, i, obj.to_f
+    end
+
+    def tail
+      Igraph.vector_tail @pointer
+    end
 
     def each
       0.upto length - 1 do |i| 
         yield self[i]
       end
+    end
+
+    def empty?
+      Igraph.vector_empty @pointer
+    end
+
+    def sum
+      Igraph.vector_sum @pointer
+    end
+
+    def product
+      Igraph.vector_prod @pointer
     end
 
     # def to_s

@@ -1,26 +1,29 @@
 require 'helper'
 
 describe Steffi::Vector do
-  it 'can be copied from an array' do
-    v = Steffi::Vector.from_a [0, 1, 2]
-    v.length.should == 3
+  it 'can create empty vectors' do
+    Steffi::Vector.null.should be_empty
   end
 
-  # subject do 
-  #   v = Steffi::Vector.new
-  #   v << 3.1415
-  #   v << 1.6180
-  #   v
-  # end
+  it 'can create vectors from slices' do
+    Steffi::Vector.from_slice(5..9).should have(5).members
+  end
 
-  # its(:size) { should == 2 }
+  # -----
 
-  # it 'can read items' do
-  #   subject[1].should == 1.6180
-  # end
+  subject { Steffi::Vector.from_a [2, 3, 4] }
 
-  # it 'can set items' do
-  #   subject[0] = -1
-  #   subject[0].should == -1
-  # end
+  its(:length)  { should == 3  }
+  its(:sum)     { should == 9  }
+  its(:product) { should == 24 }
+  its(:tail)    { should == 4  }
+
+  it 'can read values' do
+    subject[1].should == 3
+  end
+
+  it 'can set and read values' do
+    subject[1] = -1
+    subject[1].should == -1
+  end
 end
