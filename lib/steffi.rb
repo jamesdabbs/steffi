@@ -1,15 +1,18 @@
-require 'steffi/ffi'
-require 'steffi/error'
+%w{
+  ffi
+  error
+  vector
+  
+  graph
+  vertex
+  vertex_set
+  edge
+  edge_set
 
-require 'steffi/vector'
-
-require 'steffi/graph'
-require 'steffi/vertex'
-require 'steffi/edge'
-
-require 'steffi/constructors'
-require 'steffi/metrics'
-require 'steffi/communities'
+  constructors
+  metrics
+  communities
+}.each { |mod| require "steffi/#{mod}" }
 
 module Steffi
 end

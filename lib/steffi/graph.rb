@@ -3,10 +3,10 @@ module Steffi
   module Igraph
     bind :write_graph_edgelist, [:pointer, :pointer], :int
     bind :write_graph_gml, [:pointer, :pointer, :pointer, :pointer], :int
-    bind :destroy, [:pointer], :int
   end
 
   class Graph
+    attr_reader :pointer
 
     class Struct < FFI::ManagedStruct
       layout :n,        :int,
@@ -24,43 +24,59 @@ module Steffi
       end
     end
 
-    attr_reader :ptr
-
-    def initialize opts={}
-      @ptr = FFI::MemoryPointer.new Struct
-      @directed = !!opts[:directed]
+    def self.empty size, directed=false
+      new { |graph| Igraph.empty graph.pointer, size, directed }
     end
 
-    def directed?
-      @directed
+    def self.copy graph
+      new { |copy| Igraph.copy copy.pointer, graph.pointer }
     end
 
-    def file_format filename
-      ext = filename.split('.').last
+    def destroy
+      Igraph.destroy pointer
     end
 
-    def dump path, format=nil
-      format ||= file_format path
-      C.open(path, 'w') do |stream|
-        case format.to_sym
-        when :edgelist
-          Igraph.write_graph_edgelist ptr, stream
-        when :gml
-          Igraph.write_graph_gml ptr, stream, nil, nil
-        else
-          raise "Unrecognized file format: #{format}"
-        end
-      end
+    def vertices
+      VertexSet.new self
     end
 
-    def to_hash opts={}
-      color = opts[:color] || Proc.new { |n| communities[n] }
-      {
-        directed: directed?,
-        nodes: vertices.map { |v| { name: v, group: color.call(v) } },
-        links: edges.map { |e| { source: e.from, target: e.to, weight: 1 } }
-      }
+    def edges
+      EdgeSet.new self
     end
+
+    private
+
+    def initialize
+      @pointer = FFI::MemoryPointer.new Struct
+      yield self if block_given?
+    end
+
+    # def file_format filename
+    #   ext = filename.split('.').last
+    # end
+
+    # def dump path, format=nil
+    #   format ||= file_format path
+    #   C.open(path, 'w') do |stream|
+    #     case format.to_sym
+    #     when :edgelist
+    #       Igraph.write_graph_edgelist ptr, stream
+    #     when :gml
+    #       Igraph.write_graph_gml ptr, stream, nil, nil
+    #     else
+    #       raise "Unrecognized file format: #{format}"
+    #     end
+    #   end
+    # end
+
+    # def to_hash opts={}
+    #   color = opts[:color] || Proc.new { |n| communities[n] }
+    #   {
+    #     directed: directed?,
+    #     nodes: vertices.map { |v| { name: v, group: color.call(v) } },
+    #     links: edges.map { |e| { source: e.from, target: e.to, weight: 1 } }
+    #   }
+    # end
 
     private #-------------------------------------------------------
 

@@ -11,6 +11,6 @@ module Steffi
       raise Error.new "#{strerror code}: #{reason} (#{file}:#{line})"
     end
 
-    set_error_handler ErrorHandler
+    # set_error_handler ErrorHandler
   end
 end
