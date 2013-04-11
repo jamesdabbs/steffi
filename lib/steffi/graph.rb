@@ -1,5 +1,6 @@
 require 'steffi/graph/constructors'
 require 'steffi/graph/file'
+require 'steffi/graph/cliques'
 
 module Steffi
 
