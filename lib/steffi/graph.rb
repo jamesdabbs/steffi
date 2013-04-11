@@ -1,11 +1,11 @@
-require 'steffi/graph/constructors'
-require 'steffi/graph/file'
-require 'steffi/graph/cliques'
+%w{ constructors structure cliques file vertex_selector }.each do |f|
+  require "steffi/graph/#{f}"
+end
 
 module Steffi
 
   class Graph
-    attr_reader :pointer
+    attr_reader :pointer, :vertices, :edges
 
     class Struct < FFI::ManagedStruct
       layout :n,        :int,
@@ -39,18 +39,19 @@ module Steffi
       Igraph.is_directed pointer
     end
 
-    def vertices
-      VertexSet.new self
-    end
-
-    def edges
-      EdgeSet.new self
+    def subgraph vids
+      Graph.new do |subgraph|
+        vs = VertexSelector.from_a vids
+        Igraph.subgraph @pointer, subgraph.pointer, vs
+      end
     end
 
     private
 
     def initialize
-      @pointer = FFI::MemoryPointer.new Struct
+      @pointer  = FFI::MemoryPointer.new Struct
+      @vertices = VertexSet.new self
+      @edges    = EdgeSet.new self
       yield self if block_given?
     end
 
