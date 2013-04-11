@@ -35,14 +35,14 @@ module Steffi
     end
 
     # 2.1 Graph constructors and deconstructors
-    bind :empty,       [:pointer, :int, :bool]           # graph, vertex count, directed?
+    bind :empty,       [:pointer, :int, :bool]
     bind :empty_attrs, [:pointer, :int, :bool, :pointer] # graph, vertex count, directed?, (void *) attributes
-    bind :copy,        [:pointer, :pointer]              # to, from
-    bind :destroy,     [:pointer]                        # graph
+    bind :copy,        [:pointer, :pointer]
+    bind :destroy,     [:pointer]
 
     # 2.2 Basic query operations
-    bind :vcount, [:pointer], :int                     # graph => vertex count
-    bind :ecount, [:pointer], :int                     # graph => edge count
+    bind :vcount, [:pointer], :int
+    bind :ecount, [:pointer], :int
     bind :edge,   [:pointer, :int, :pointer, :pointer] # graph, edge #, &from, &to
 
     # graph, &edge #, from, to, directed?, error?
@@ -62,7 +62,7 @@ module Steffi
     bind :degree, [:pointer, :pointer, :int, :bool]
 
     # 2.3 Adding and deleting vertices and edges
-    bind :add_edge,        [:pointer, :int, :int]         # graph, from, to
+    bind :add_edge,        [:pointer, :int, :int]
     bind :add_edges,       [:pointer, :pointer, :pointer] # graph, [edges], (void *) attrs
     bind :add_vertices,    [:pointer, :int, :pointer]     # graph, id, (void *) attr
     bind :delete_edges,    [:pointer, :pointer]           # graph, eids

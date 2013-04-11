@@ -35,4 +35,15 @@ describe Steffi::Graph do
     # I don't see a great way to check that C memory has been freed
     Steffi::Graph.empty(1).should respond_to :destroy
   end
+
+  it 'can create edges' do
+    g = Steffi::Graph.empty 2
+    g.edges << [0, 1]
+    g.edges.should have(1).member
+  end
+
+  it 'can look up edges' do
+    g = Steffi::Graph.full 5
+    g.edges.first.should == [0, 1]
+  end
 end

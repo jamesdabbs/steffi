@@ -1,13 +1,34 @@
-class EdgeSet
-  def initialize graph
-    @graph = graph
-  end
+module Steffi
+  class EdgeSet
+    include Enumerable
 
-  def size
-    Steffi::Igraph.ecount @graph.pointer
-  end
+    def initialize graph
+      @graph = graph
+    end
 
-  def empty?
-    size == 0
+    def size
+      Igraph.ecount @graph.pointer
+    end
+
+    def empty?
+      size == 0
+    end
+
+    def << pair
+      Igraph.add_edge @graph.pointer, pair.first, pair.last
+    end
+
+    def [] n
+      from = FFI::MemoryPointer.new :int
+      to   = FFI::MemoryPointer.new :int
+      Igraph.edge @graph.pointer, n, from, to
+      [from.get_int(0), to.get_int(0)]
+    end
+
+    def each
+      0.upto size do |i|
+        yield self[i]
+      end
+    end
   end
 end

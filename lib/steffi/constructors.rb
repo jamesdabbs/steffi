@@ -54,8 +54,11 @@ module Steffi
       Igraph.forest_fire_game ptr, n, 0.01/k, 1, 2, directed?
     end
 
-    constructor :full do |n|
-      Igraph.full ptr, n, directed?, false
+    # constructor :full do |n|
+    #   Igraph.full ptr, n, directed?, false
+    # end
+    def self.full n, directed=false, loops=false
+      new { |graph| Igraph.full graph.pointer, n, directed, loops }
     end
 
     constructor :ring do |n|
