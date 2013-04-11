@@ -1,5 +1,7 @@
 module Steffi
   class VertexSet
+    include Enumerable
+    
     def initialize graph
       @graph = graph
     end
@@ -10,6 +12,16 @@ module Steffi
 
     def empty?
       size == 0
+    end
+
+    def [] n
+      Vertex.new @graph, n
+    end
+
+    def each
+      0.upto size - 1 do |i|
+        yield self[i]
+      end
     end
   end
 end

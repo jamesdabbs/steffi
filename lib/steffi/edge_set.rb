@@ -26,7 +26,7 @@ module Steffi
     end
 
     def each
-      0.upto size do |i|
+      0.upto size - 1 do |i|
         yield self[i]
       end
     end
@@ -35,5 +35,19 @@ module Steffi
       id = FFI::MemoryPointer.new :int
       Igraph.get_eid @graph.pointer, id, pair.first, pair.last, @graph.directed?, error
     end
+
+    # def find_pairs *pairs
+    #   edges = Vector.new
+    #   error = false
+    #   Igraph.get_eids @graph.pointer, edges.pointer, Vector.from_a(pairs), nil, @graph.directed?, error
+    #   edges
+    # end
+
+    # def find_path *vertices
+    #   edges = Vector.new
+    #   error = false
+    #   Igraph.get_eids @graph.pointer, edges.pointer, nil, Vector.from_a(pairs), nil, @graph.directed?, error
+    #   edges
+    # end
   end
 end

@@ -1,6 +1,11 @@
 require 'helper'
 
 describe Steffi::Vector do
+  it 'can be copied from an array' do
+    v = Steffi::Vector.from_a [0, 1, 2]
+    v.length.should == 3
+  end
+
   # subject do 
   #   v = Steffi::Vector.new
   #   v << 3.1415

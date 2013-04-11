@@ -15,7 +15,7 @@ describe Steffi::Graph do
   #   expect { Steffi::Graph.famous 'non-existent' }.to raise_error(Steffi::Igraph::Error)
   # end
 
-  # -- 2 -----
+  # -- 4.1-3 -----
 
   it 'can create empty graphs' do
     g = Steffi::Graph.empty 5
@@ -60,5 +60,25 @@ describe Steffi::Graph do
   end
 
   pending 'can lookup directed edges'
-  pending 'can handle errors when looking up edges'
+  pending 'can handle errors when looking up edges (eid, eids, eids_multi)'
+
+  # it 'can look up a list of edges by vertex' do
+  #   g = Steffi::Graph.full 3
+  #   g.edges.find_pairs([0,1], [1,2]).should == [0, 1]
+  # end
+
+  # it 'can look up a list of edges in a path' do
+  #   g = Steffi::Graph.full 3
+  #   g.edges.find_path([0,1,2]).should == [0, 1]
+  # end
+
+  it 'can look up neighbors' do
+    g = Steffi::Graph.full 5
+    g.vertices.first.neighbors.should == [1, 2, 3, 4]
+  end
+
+  it 'knows incident edges' do
+    g = Steffi::Graph.full 3
+    g.vertices.first.incident.should == [0, 1]
+  end
 end
